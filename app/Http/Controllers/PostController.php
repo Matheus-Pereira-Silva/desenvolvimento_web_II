@@ -2,107 +2,81 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Post;
-use App\Models\Comment;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // Exibir lista de posts
     public function index()
     {
-        $posts = Post::latest()->paginate(10);
-        return view('posts.index', compact('posts'));
+        $posts = Post::latest()->get(); // Ordena por data de criação
+        return view('home', compact('posts'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // Exibir formulário de criação de post
     public function create()
     {
         return view('posts.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    // Armazenar novo post
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'title' => 'required|max:255',
-            'content' => 'required',
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
         ]);
 
-        Post::create($validatedData);
+        // Atribui o ID do usuário autenticado
+        $validated['user_id'] = Auth::id(); // Para pegar o ID do usuário autenticado
 
-        return redirect()->route('posts.index')
-                        ->with('success', 'Post created successfully.');
+        Post::create($validated);
+        return redirect('/')->with('success', 'Post criado com sucesso!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    // Exibir um post específico
+    public function show(Post $post)
     {
-        $post = Post::findOrFail($id);
         return view('posts.show', compact('post'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    // Exibir formulário de edição de post
+    public function edit(Post $post)
     {
-        $post = Post::findOrFail($id);
+        $this->authorizeAction($post);
         return view('posts.edit', compact('post'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    // Atualizar um post
+    public function update(Request $request, Post $post)
     {
-        $validatedData = $request->validate([
-            'title' => 'required|max:255',
-            'content' => 'required',
+        $this->authorizeAction($post);
+
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
         ]);
 
-        $post = Post::findOrFail($id);
-        $post->update($validatedData);
-
-        return redirect()->route('posts.show', $post)->with('success', 'Post updated successfully.');
+        $post->update($validated);
+        return redirect('/')->with('success', 'Post atualizado com sucesso!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    // Excluir um post
+    public function destroy(Post $post)
     {
-        $post = Post::findOrFail($id);
-        $post->delete();
+        $this->authorizeAction($post);
 
-        return redirect()->route('posts.index')->with('success', 'Post deleted successfully.');
+        $post->delete();
+        return redirect('/')->with('success', 'Post excluído com sucesso!');
+    }
+
+    // Autorizar ação para o proprietário do post ou administrador
+    private function authorizeAction(Post $post)
+    {
+        if (Auth::id() !== $post->user_id) {
+            abort(403, 'Você não tem permissão para realizar esta ação.');
+        }
     }
 }

@@ -1,56 +1,24 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">Editar Post</div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('posts.update', $post) }}">
-                        @csrf
-                        @method('PUT')
-
-                        <div class="form-group row">
-                            <label for="title" class="col-md-4 col-form-label text-md-right">Título</label>
-
-                            <div class="col-md-6">
-                                <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title', $post->title) }}" required autocomplete="title">
-
-                                @error('title')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="content" class="col-md-4 col-form-label text-md-right">Conteúdo</label>
-
-                            <div class="col-md-6">
-                                <textarea id="content" class="form-control @error('content') is-invalid @enderror" name="content" required>{{ old('content', $post->content) }}</textarea>
-
-                                @error('content')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Atualizar Post
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+    <div class="container mt-5">
+        <h1>Editar Reclamação</h1>
+        @if (auth()->user()->id === $post->user_id || auth()->user()->is_admin)
+            <form action="{{ route('posts.update', $post->id) }}" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="form-group">
+                    <label for="title">Título</label>
+                    <input type="text" name="title" id="title" class="form-control" value="{{ $post->title }}" required>
                 </div>
-            </div>
-        </div>
+                <div class="form-group mt-3">
+                    <label for="content">Conteúdo</label>
+                    <textarea name="content" id="content" class="form-control" rows="5" required>{{ $post->content }}</textarea>
+                </div>
+                <button type="submit" class="btn btn-success mt-3">Salvar Alterações</button>
+            </form>
+        @else
+            <div class="alert alert-danger mt-3">Você não tem permissão para editar este post.</div>
+        @endif
     </div>
-</div>
 @endsection

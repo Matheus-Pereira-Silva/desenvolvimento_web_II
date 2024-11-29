@@ -2,44 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Comment;
 use App\Models\Post;
+use App\Models\Comment;
+use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @param  int  $postId
-     * @return \Illuminate\Http\Response
-     */
-    public function index($postId)
+    // Exibir os comentários de um post específico
+    public function index(Post $post)
     {
-        $comments = Comment::where('post_id', $postId)->latest()->paginate(10);
-        $post = Post::findOrFail($postId);
-        return view('comments.index', compact('comments', 'post'));
+        return view('posts.show', compact('post'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $postId
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request, $postId)
+    // Armazenar novo comentário
+    public function store(Request $request, Post $post)
     {
-        $this->validate($request, [
-            'body' => 'required',
+        $validated = $request->validate([
+            'comment' => 'required|string|max:1000',
         ]);
 
-        $comment = Comment::create([
-            'post_id' => $postId,
-            'user_id' => auth()->id(),
-            'body' => $request->body,
+        $post->comments()->create([
+            'content' => $validated['comment'],
+            'author' => $request->user() ? $request->user()->name : 'Visitante',
         ]);
 
-        return redirect()->back()->with('success', 'Comentário adicionado com sucesso.');
+        return back()->with('success', 'Comentário adicionado com sucesso!');
     }
 }
