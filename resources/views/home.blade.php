@@ -26,7 +26,7 @@
                                 <label for="content">Conteúdo</label>
                                 <textarea name="content" id="content" class="form-control" rows="5" required></textarea>
                             </div>
-                            <button type="submit" class="btn btn-success mt-3">Criar Post</button>
+                            <button type="submit" class="btn btn-success mt-3">Confirmar</button>
                         </form>
                     </div>
                 </div>
@@ -53,6 +53,17 @@
                                 <li class="list-group-item">
                                     <strong>{{ $comment->author ?? 'Visitante' }}:</strong> {{ $comment->content }}
                                     <span class="text-muted float-end small">{{ $comment->created_at->format('d/m/Y H:i') }}</span>
+
+                                    <!-- Edição e Exclusão de Comentário -->
+                                    <div class="mt-2 d-flex justify-content-end">
+                                        <a href="{{ route('comments.edit', $comment->id) }}" class="btn btn-warning btn-sm">Editar</a>
+                                        <form action="{{ route('comments.destroy', $comment->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('Tem certeza que deseja deletar este comentário?')">Excluir</button>
+                                        </form>
+                                    </div>
                                 </li>
                             @endforeach
                         </ul>
@@ -67,17 +78,15 @@
                     </form>
 
                     <!-- Edição e Exclusão de Post -->
-                    @if (auth()->check() && (auth()->user()->id === $post->user_id || auth()->user()->is_admin))
-                        <div class="mt-3 d-flex justify-content-between">
-                            <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-warning btn-sm">Editar</a>
-                            <form action="{{ route('posts.destroy', $post->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm"
-                                        onclick="return confirm('Tem certeza que deseja deletar este post?')">Excluir</button>
-                            </form>
-                        </div>
-                    @endif
+                    <div class="mt-3 d-flex justify-content-between">
+                        <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-warning btn-sm">Editar</a>
+                        <form action="{{ route('posts.destroy', $post->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Tem certeza que deseja deletar esta reclamação?')">Excluir</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         @endforeach

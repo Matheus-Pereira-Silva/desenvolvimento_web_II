@@ -5,23 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class PostController extends Controller
 {
-    // Exibir lista de posts
+    use AuthorizesRequests;
+
+    // Exibir todos os posts
     public function index()
     {
-        $posts = Post::latest()->get(); // Ordena por data de criação
+        $posts = Post::latest()->get();
         return view('home', compact('posts'));
     }
 
-    // Exibir formulário de criação de post
-    public function create()
-    {
-        return view('posts.create');
-    }
-
-    // Armazenar novo post
+    // Criar novo post
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -29,30 +26,23 @@ class PostController extends Controller
             'content' => 'required|string',
         ]);
 
-        // Atribui o ID do usuário autenticado
-        $validated['user_id'] = Auth::id(); // Para pegar o ID do usuário autenticado
-
+        $validated['user_id'] = Auth::id();
         Post::create($validated);
+
         return redirect('/')->with('success', 'Post criado com sucesso!');
     }
 
-    // Exibir um post específico
-    public function show(Post $post)
-    {
-        return view('posts.show', compact('post'));
-    }
-
-    // Exibir formulário de edição de post
+    // Editar post
     public function edit(Post $post)
     {
-        $this->authorizeAction($post);
+        $this->authorize('update', $post);
         return view('posts.edit', compact('post'));
     }
 
-    // Atualizar um post
+    // Atualizar post
     public function update(Request $request, Post $post)
     {
-        $this->authorizeAction($post);
+        $this->authorize('update', $post);
 
         $validated = $request->validate([
             'title' => 'required|string|max:255',
@@ -63,20 +53,12 @@ class PostController extends Controller
         return redirect('/')->with('success', 'Post atualizado com sucesso!');
     }
 
-    // Excluir um post
+    // Excluir post
     public function destroy(Post $post)
     {
-        $this->authorizeAction($post);
-
+        $this->authorize('delete', $post);
         $post->delete();
-        return redirect('/')->with('success', 'Post excluído com sucesso!');
-    }
 
-    // Autorizar ação para o proprietário do post ou administrador
-    private function authorizeAction(Post $post)
-    {
-        if (Auth::id() !== $post->user_id) {
-            abort(403, 'Você não tem permissão para realizar esta ação.');
-        }
+        return redirect('/')->with('success', 'Post excluído com sucesso!');
     }
 }
