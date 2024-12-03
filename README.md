@@ -9,7 +9,7 @@ composer install
 
 ### Para instalar as dependências do Node.js:
 ```bash
-use npm install
+npm install
 ```
 
 ### Criar uma cópia do arquivo .env.example e renomeá-la para .env:
@@ -39,7 +39,7 @@ create database bd_laravel;
 
 ### Entrar no banco:
 ```bash
-use bd_laravel;
+bd_laravel;
 ```
 
 ## Execute o comando para realizar a migration (terminal):
@@ -52,31 +52,31 @@ php artisan migrate
 
 ### Para instalar as dependências do Node.js:
 ```bash
-use npm install
+npm install
 ```
 
 ### Para compilar os assets para desenvolvimento:
 ```bash
-use npm run build
+npm run build
 ```
 
 ### Para compilar os assets para desenvolvimento:
 ```bash
-use npm run build
+npm run build
 ```
 
 ### Para rodar o servidor:
 ```bash
-use npm run dev
+npm run dev
 ```
 ### Para rodar o servidor local:
 ```bash
 php artisan serve
 ```
 
-## Integrantes:
--Matheus Pereira
--Luiz Fernando Kerico
+### Integrantes:
+- Matheus Pereira
+- Luiz Fernando Kerico
 
 
 
