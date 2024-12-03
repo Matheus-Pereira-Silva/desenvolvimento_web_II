@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('head')
+@vite('resources/css/home.css')
+@endsection
+
 @section('content')
 <div class="container mt-5 text-center">
     <h1 class="mb-4">Reclame Aqui</h1>
@@ -51,7 +55,7 @@
                     <ul class="list-group">
                         @foreach ($post->comments as $comment)
                             <li class="list-group-item">
-                                <strong>{{ $comment->author }}:</strong> {{ $comment->content }} <!-- Atualizado para usar 'author' -->
+                                <strong>{{ $comment->author }}:</strong> {{ $comment->content }}
                                 <span class="text-muted float-end small">{{ $comment->created_at->format('d/m/Y H:i') }}</span>
 
                                 <!-- Edição e Exclusão de Comentário -->

@@ -3,10 +3,14 @@
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PasswordController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\AdminController;
+
 
 // Página inicial com listagem de posts
 Route::get('/', [PostController::class, 'index'])->name('home');
@@ -42,13 +46,30 @@ Route::middleware('auth')->group(function () {
         Route::delete('/delete', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
 
+    Route::middleware('auth')->group(function () {
+        Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+        Route::delete('/admin/posts/{id}', [AdminController::class, 'destroyPost'])->name('admin.posts.destroy');
+        Route::delete('/admin/comments/{id}', [AdminController::class, 'destroyComment'])->name('admin.comments.destroy');
+    });
+
+
+    // Rotas de redefinição de senha
+    Route::get('/password/edit', [PasswordController::class, 'edit'])->name('password.edit');
+    Route::put('/password', [PasswordController::class, 'update'])->name('password.update');
+
     // Logout
     Route::post('/logout', function () {
         Auth::logout();
         return redirect('/'); // Redireciona para a página inicial
     })->name('logout');
+
+    // Rotas de verificação de e-mail
+    Route::get('/email/verify', [VerificationController::class, 'show'])->name('verification.notice');
+    Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
+    Route::post('/email/resend', [VerificationController::class, 'resend'])->name('verification.send');
 });
 
+// Rotas de autenticação
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 Route::get('register', [RegisteredUserController::class, 'create'])->name('register');

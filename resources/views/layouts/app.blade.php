@@ -7,17 +7,18 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-
-
-    <!-- Fonts -->
+    <!-- Fontes -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS (Home) -->
+    @yield('head')
 </head>
 <body class="font-sans antialiased">
+
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
@@ -41,13 +42,12 @@
                         <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
                     @endif
                 </ul>
-
             </div>
         </div>
     </nav>
 
-    <!-- Page Content -->
-    <div class="min-h-screen bg-gray-100">
+    <!-- Conteúdo da Página -->
+    <div class="min-h-screen bg-light">
         @yield('content')
     </div>
 
