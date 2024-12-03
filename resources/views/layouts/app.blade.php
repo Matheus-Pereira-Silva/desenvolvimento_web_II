@@ -7,6 +7,9 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
@@ -34,9 +37,11 @@
                             </form>
                         </li>
                     @else
-                        <li class="nav-item"><a class="nav-link" href="#">Visitante</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
                     @endif
                 </ul>
+
             </div>
         </div>
     </nav>

@@ -1,6 +1,30 @@
-@import 'bootstrap/dist/css/bootstrap.min.css';
+form {
+    max-width: 400px; /* Define uma largura máxima */
+    margin: 0 auto; /* Centraliza o formulário */
+    padding: 20px; /* Adiciona espaço interno */
+    border: 1px solid #ccc; /* Opcional: borda ao redor */
+    border-radius: 10px; /* Cantos arredondados */
+    background-color: #f9f9f9; /* Fundo claro */
+}
 
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
+input[type='text'],
+input[type='email'],
+input[type='password'],
+button {
+    width: 100%; /* Preenche a largura do contêiner */
+    box-sizing: border-box; /* Inclui padding/border na largura total */
+    margin-bottom: 10px; /* Espaço entre os campos */
+    padding: 8px; /* Espaço interno */
+    border-radius: 5px; /* Cantos arredondados */
+}
+
+button {
+    background-color: #28a745; /* Verde */
+    color: white; /* Texto branco */
+    border: none; /* Remove a borda padrão */
+    cursor: pointer; /* Muda o cursor para ponteiro */
+}
+
+button:hover {
+    background-color: #218838; /* Verde mais escuro ao passar o mouse */
 }
