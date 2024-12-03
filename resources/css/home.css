@@ -17,7 +17,6 @@ h1 {
     margin-bottom: 20px;
 }
 
-/* Cartões */
 .card {
     border-radius: 15px;
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
@@ -51,7 +50,6 @@ h1 {
     border-top: 1px solid #ddd;
 }
 
-/* Botões */
 button.btn,
 .btn-link {
     transition:
@@ -90,14 +88,14 @@ button.btn:hover,
     align-items: center;
     padding: 12px 24px;
     font-size: 1rem;
-    height: 50px; /* Ajuste a altura conforme necessário */
-    line-height: 1; /* Ajuste de alinhamento vertical */
+    height: 50px;
+    line-height: 1;
     transition:
         background-color 0.3s ease,
         transform 0.3s ease,
         box-shadow 0.2s ease;
     border-radius: 10px;
-    margin-bottom: 5px; /* Adiciona margem inferior para alinhar melhor com o botão de excluir */
+    margin-bottom: 5px;
 }
 
 .btn-warning:hover {
@@ -113,8 +111,8 @@ button.btn:hover,
     align-items: center;
     padding: 12px 24px;
     font-size: 1rem;
-    height: 50px; /* Ajuste a altura conforme necessário */
-    line-height: 1; /* Ajuste de alinhamento vertical */
+    height: 50px;
+    line-height: 1;
     transition:
         background-color 0.3s ease,
         transform 0.3s ease,
@@ -126,7 +124,6 @@ button.btn:hover,
     background-color: #d62839;
 }
 
-/* Links de navegação */
 .navbar-nav .nav-item .nav-link {
     padding: 12px 20px;
     transition:
@@ -142,13 +139,12 @@ button.btn:hover,
 }
 
 .navbar-nav .nav-item .nav-link:hover {
-    transform: translateY(-5px) scale(1.05); /* Animação com escala maior */
+    transform: translateY(-5px) scale(1.05);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     background-color: #1d3557;
     color: #fff;
 }
 
-/* Botão de Home com animação */
 .navbar-nav .nav-item .nav-link.home-btn {
     padding: 12px 20px;
     transition:
@@ -156,7 +152,7 @@ button.btn:hover,
         transform 0.3s ease,
         box-shadow 0.2s ease;
     border-radius: 8px;
-    background-color: #2a9d8f; /* Mesma cor que os botões de login e register */
+    background-color: #2a9d8f;
     color: #fff;
     display: inline-flex;
     justify-content: center;
@@ -164,13 +160,12 @@ button.btn:hover,
 }
 
 .navbar-nav .nav-item .nav-link.home-btn:hover {
-    transform: translateY(-5px) scale(1.05); /* Animação no hover */
+    transform: translateY(-5px) scale(1.05);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    background-color: #1d3557; /* Cor de fundo no hover */
+    background-color: #1d3557;
     color: #fff;
 }
 
-/* Input e Textarea */
 textarea,
 input[type='text'] {
     border-radius: 8px;

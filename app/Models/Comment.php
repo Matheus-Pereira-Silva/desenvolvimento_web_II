@@ -9,16 +9,14 @@ class Comment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['content', 'post_id', 'author']; // Inclui 'author'
+    protected $fillable = ['content', 'post_id', 'author'];
 
 
-    // Relacionamento com o modelo Post
     public function post()
     {
         return $this->belongsTo(Post::class);
     }
 
-    // Relacionamento com o modelo User (autor do comentário)
     public function user()
     {
         return $this->belongsTo(User::class);

@@ -8,10 +8,8 @@
 <div class="container mt-5 text-center">
     <h1 class="mb-4">Reclame Aqui</h1>
 
-    <!-- Botão para abrir o modal -->
     <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createPostModal">Fazer uma reclamação</button>
 
-    <!-- Modal -->
     <div class="modal fade" id="createPostModal" tabindex="-1" aria-labelledby="createPostModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -58,7 +56,6 @@
                                 <strong>{{ $comment->author }}:</strong> {{ $comment->content }}
                                 <span class="text-muted float-end small">{{ $comment->created_at->format('d/m/Y H:i') }}</span>
 
-                                <!-- Edição e Exclusão de Comentário -->
                                 <div class="mt-2 d-flex justify-content-end">
                                     <a href="{{ route('comments.edit', $comment->id) }}" class="btn btn-warning btn-sm">Editar</a>
                                     <form action="{{ route('comments.destroy', $comment->id) }}" method="POST">
@@ -81,7 +78,6 @@
                     <button type="submit" class="btn btn-primary mt-2">Comentar</button>
                 </form>
 
-                <!-- Edição e Exclusão de Post -->
                 <div class="mt-3 d-flex justify-content-between">
                     <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-warning btn-sm">Editar</a>
                     <form action="{{ route('posts.destroy', $post->id) }}" method="POST">

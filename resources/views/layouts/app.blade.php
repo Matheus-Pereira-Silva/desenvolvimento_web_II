@@ -7,14 +7,10 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Fontes -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom CSS (Home) -->
     @yield('head')
 </head>
 <body class="font-sans antialiased">
@@ -46,12 +42,10 @@
         </div>
     </nav>
 
-    <!-- Conteúdo da Página -->
     <div class="min-h-screen bg-light">
         @yield('content')
     </div>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
