@@ -26,8 +26,12 @@ class PostController extends Controller
             'content' => 'required|string',
         ]);
 
-        $validated['user_id'] = Auth::id();
-        Post::create($validated);
+        // Criar e salvar o post com o ID do usuário autenticado
+        Post::create([
+            'title' => $validated['title'],
+            'content' => $validated['content'],
+            'user_id' => Auth::id(),
+        ]);
 
         return redirect('/')->with('success', 'Post criado com sucesso!');
     }
@@ -35,9 +39,9 @@ class PostController extends Controller
     // Editar post
     public function edit(Post $post)
     {
-        $this->authorize('update', $post);
-        return view('posts.edit', compact('post'));
+    return view('posts.edit', compact('post'));
     }
+
 
     // Atualizar post
     public function update(Request $request, Post $post)

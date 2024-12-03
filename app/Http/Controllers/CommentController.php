@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
@@ -21,9 +22,12 @@ class CommentController extends Controller
             'comment' => 'required|string|max:1000',
         ]);
 
+        // Pega o nome do autor ou define como 'Visitante'
+        $author = Auth::check() ? Auth::user()->name : 'Visitante';
+
         $post->comments()->create([
-            'content' => $validated['comment'],
-            'author' => $request->user() ? $request->user()->name : 'Visitante',
+            'content' => $validated['comment'], // Comentário
+            'author' => $author,               // Nome do autor
         ]);
 
         return back()->with('success', 'Comentário adicionado com sucesso!');

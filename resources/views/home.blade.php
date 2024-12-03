@@ -38,7 +38,7 @@
         <div class="card mb-4 shadow-sm">
             <div class="card-header bg-primary text-white">
                 <h2 class="mb-0">{{ $post->title }}</h2>
-                <small>Autor: {{ $post->author ?? 'Anônimo' }}</small>
+                <small>Autor: {{ $post->user->name ?? 'Anônimo' }}</small>
             </div>
             <div class="card-body">
                 <p>{{ $post->content }}</p>
@@ -51,7 +51,7 @@
                     <ul class="list-group">
                         @foreach ($post->comments as $comment)
                             <li class="list-group-item">
-                                <strong>{{ $comment->author ?? 'Visitante' }}:</strong> {{ $comment->content }}
+                                <strong>{{ $comment->author }}:</strong> {{ $comment->content }} <!-- Atualizado para usar 'author' -->
                                 <span class="text-muted float-end small">{{ $comment->created_at->format('d/m/Y H:i') }}</span>
 
                                 <!-- Edição e Exclusão de Comentário -->
